@@ -1,5 +1,5 @@
 # -*- encoding: utf-8 -*-
-from distutils.core import setup
+from setuptools import setup
 
 setup(
     name='datetime_truncate',
@@ -29,7 +29,7 @@ setup(
         'Programming Language :: Python :: 3.5',
         'Programming Language :: Python :: 3.6',
     ],
-    requires=[
+    install_requires=[
         'six',
         'typing',
     ]
