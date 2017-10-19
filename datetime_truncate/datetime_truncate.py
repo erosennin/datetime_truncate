@@ -1,7 +1,9 @@
 from __future__ import absolute_import, division, print_function
-from datetime import timedelta
+
+import datetime as dt
 
 from six.moves import range
+from typing import Text
 
 __all__ = [
     'truncate',
@@ -29,26 +31,31 @@ ODD_PERIODS = ['week', 'quarter', 'half_year']
 
 
 def truncate_second(datetime):
+    # type: (dt.datetime) -> dt.datetime
     ''' Sugar for :py:func:`truncate(datetime, 'second')` '''
     return truncate(datetime, 'second')
 
 
 def truncate_minute(datetime):
+    # type: (dt.datetime) -> dt.datetime
     ''' Sugar for :py:func:`truncate(datetime, 'minute')` '''
     return truncate(datetime, 'minute')
 
 
 def truncate_hour(datetime):
+    # type: (dt.datetime) -> dt.datetime
     ''' Sugar for :py:func:`truncate(datetime, 'hour')` '''
     return truncate(datetime, 'hour')
 
 
 def truncate_day(datetime):
+    # type: (dt.datetime) -> dt.datetime
     ''' Sugar for :py:func:`truncate(datetime, 'day')` '''
     return truncate(datetime, 'day')
 
 
 def truncate_week(datetime):
+    # type: (dt.datetime) -> dt.datetime
     '''
     Truncates a date to the first day of an ISO 8601 week, i.e. monday.
 
@@ -57,15 +64,17 @@ def truncate_week(datetime):
     :rtype: :py:mod:`datetime` datetime object
     '''
     datetime = truncate(datetime, 'day')
-    return datetime - timedelta(days=datetime.isoweekday() - 1)
+    return datetime - dt.timedelta(days=datetime.isoweekday() - 1)
 
 
 def truncate_month(datetime):
+    # type: (dt.datetime) -> dt.datetime
     ''' Sugar for :py:func:`truncate(datetime, 'month')` '''
     return truncate(datetime, 'month')
 
 
 def truncate_quarter(datetime):
+    # type: (dt.datetime) -> dt.datetime
     '''
     Truncates the datetime to the first day of the quarter for this date.
 
@@ -87,6 +96,7 @@ def truncate_quarter(datetime):
 
 
 def truncate_half_year(datetime):
+    # type: (dt.datetime) -> dt.datetime
     '''
     Truncates the datetime to the first day of the half year for this date.
 
@@ -105,12 +115,13 @@ def truncate_half_year(datetime):
 
 
 def truncate_year(datetime):
+    # type: (dt.datetime) -> dt.datetime
     ''' Sugar for :py:func:`truncate(datetime, 'year')` '''
     return truncate(datetime, 'year')
 
 
 def truncate_nth_minute(datetime, nth_minute):
-    # type: (datetime, int) -> datetime
+    # type: (dt.datetime, int) -> dt.datetime
     '''
     Truncates the datetime to the nth minute closest to it. For instance
     with 5 as the argument it becomes the nearest five minute down from
@@ -133,6 +144,7 @@ def truncate_nth_minute(datetime, nth_minute):
 
 
 def truncate(datetime, truncate_to='day'):
+    # type: (dt.datetime, Text) -> dt.datetime
     '''
     Truncates a datetime to have the values with higher precision than
     the one set as `truncate_to` as zero (or one for day and month).
@@ -152,11 +164,11 @@ def truncate(datetime, truncate_to='day'):
 
     Examples::
 
-       >>> truncate(datetime(2012, 12, 12, 12), 'day')
+       >>> truncate(dt.datetime(2012, 12, 12, 12), 'day')
        datetime(2012, 12, 12)
-       >>> truncate(datetime(2012, 12, 14, 12, 15), 'quarter')
+       >>> truncate(dt.datetime(2012, 12, 14, 12, 15), 'quarter')
        datetime(2012, 10, 1)
-       >>> truncate(datetime(2012, 3, 1), 'week')
+       >>> truncate(dt.datetime(2012, 3, 1), 'week')
        datetime(2012, 2, 27)
 
     :params datetime: an initialized datetime object

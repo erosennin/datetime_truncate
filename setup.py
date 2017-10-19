@@ -24,5 +24,6 @@ setup(
     ],
     requires=[
         'six',
+        'typing',
     ]
 )
