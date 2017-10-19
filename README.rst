@@ -62,6 +62,19 @@ There are also sugar functions available on the form:
 * `truncate_half_year`
 * `truncate_year`
 
+Changes
+=======
+
+`1.1.0`_ - 2017-10-19
+---------------------
+
+* Added truncate to nth minute of the hour, so if you want to
+  truncate to every third minute you do: `truncate(dt, '3_minute')` or
+  with some more sugar on top; `truncate_nth_minute(dt, 3)`
+* Fixed bugs with truncate quarter and half_year, thanks `@thegrymek`_!
+
+.. _1.1.0: https://github.com/gaqzi/datetime_truncate/compare/1.0.1...1.1.0
+.. _@thegrymek: https://github.com/thegrymek
 
 .. _DATE_TRUNC: http://www.postgresql.org/docs/9.1/static/functions-datetime.html#FUNCTIONS-DATETIME-TRUNC
 .. _Read the Docs: http://datetime_truncate.readthedocs.org/en/latest/
