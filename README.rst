@@ -30,6 +30,10 @@ Usage:
     datetime(2012, 2, 4, 12, 24, 50)
     >>> truncate(datetime(2012, 2, 4, 12, 24, 50), 'minute')
     datetime(2012, 2, 4, 12, 24)
+    >>> truncate(datetime(2012, 2, 4, 12, 24, 50), '5_minute')
+    datetime(2012, 2, 4, 12, 20)
+    >>> truncate(datetime(2012, 2, 4, 12, 24, 50), '19_minute')
+    datetime(2012, 2, 4, 12, 19)
     >>> truncate(datetime(2012, 2, 4, 12, 24), 'hour')
     datetime(2012, 2, 4, 12)
     >>> truncate(datetime(2012, 2, 4, 12, 24), 'day')
@@ -49,6 +53,7 @@ There are also sugar functions available on the form:
 
 * `truncate_second`
 * `truncate_minute`
+* `truncate_nth_minute`
 * `truncate_hour`
 * `truncate_day`
 * `truncate_week`

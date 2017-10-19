@@ -21,6 +21,31 @@ class TestDatetimeTruncate(unittest.TestCase):
         self.assertEqual(truncate(self.default_dt, 'minute'),
                          self.default_dt.replace(second=0, microsecond=0))
 
+    def test_truncate_to_nth_minute(self):
+        self.assertEqual(truncate(self.default_dt, '5_minute'),
+                         self.default_dt.replace(minute=10, second=0,
+                                                 microsecond=0))
+
+        self.assertEqual(truncate(self.default_dt, '2_minute'),
+                         self.default_dt.replace(minute=14, second=0,
+                                                 microsecond=0))
+
+        self.assertEqual(truncate(self.default_dt.replace(minute=40),
+                                  '13_minute'),
+                         self.default_dt.replace(minute=39, second=0,
+                                                 microsecond=0))
+
+        self.assertEqual(truncate(self.default_dt.replace(minute=20),
+                                  '9_minute'),
+                         self.default_dt.replace(minute=18, second=0,
+                                                 microsecond=0))
+
+        with self.assertRaises(ValueError) as cm:
+            truncate(self.default_dt, '60_minute')
+        assert cm.exception.args[0] == (
+            '`nth_minute` must be >= 0 and < 60, was 60'
+        )
+
     def test_truncate_to_hour(self):
         self.assertEqual(truncate(self.default_dt, 'hour'),
                          self.default_dt.replace(minute=0, second=0,

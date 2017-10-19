@@ -1,9 +1,13 @@
+from __future__ import absolute_import, division, print_function
 from datetime import timedelta
+
+from six.moves import range
 
 __all__ = [
     'truncate',
     'truncate_second',
     'truncate_minute',
+    'truncate_nth_minute',
     'truncate_hour',
     'truncate_day',
     'truncate_week',
@@ -105,6 +109,29 @@ def truncate_year(datetime):
     return truncate(datetime, 'year')
 
 
+def truncate_nth_minute(datetime, nth_minute):
+    # type: (datetime, int) -> datetime
+    '''
+    Truncates the datetime to the nth minute closest to it. For instance
+    with 5 as the argument it becomes the nearest five minute down from
+    the datetime.
+
+    :param datetime: an initialized datetime object
+    :type datetime: datetime
+    :param nth_minute: the minute to truncate to
+    :type nth_minute: int
+    :rtype: :py:mod:`datetime` datetime object
+    '''
+    if not 0 <= nth_minute < 60:
+        raise ValueError(
+            '`nth_minute` must be >= 0 and < 60, was {0}'.format(nth_minute)
+        )
+
+    for m in range(0, 60, nth_minute):
+        if m <= datetime.minute < m + nth_minute:
+            return datetime.replace(minute=m, second=0, microsecond=0)
+
+
 def truncate(datetime, truncate_to='day'):
     '''
     Truncates a datetime to have the values with higher precision than
@@ -114,6 +141,7 @@ def truncate(datetime, truncate_to='day'):
 
     * second
     * minute
+    * <num>_minute (i.e. 5_minute, 19_minute, 2_minute, etc.)
     * hour
     * day
     * week (iso week i.e. to monday)
@@ -145,6 +173,8 @@ def truncate(datetime, truncate_to='day'):
             return truncate_quarter(datetime)
         elif truncate_to == 'half_year':
             return truncate_half_year(datetime)
+    elif truncate_to.endswith('_minute'):
+        return truncate_nth_minute(datetime, int(truncate_to.split('_')[0]))
     else:
         raise ValueError('truncate_to not valid. Valid periods: {}'.format(
             ', '.join(PERIODS.keys() + ODD_PERIODS)
