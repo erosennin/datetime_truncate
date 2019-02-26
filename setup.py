@@ -31,6 +31,6 @@ setup(
     ],
     install_requires=[
         'six',
-        'typing',
+        'typing; python_version<"3.5"',
     ]
 )
